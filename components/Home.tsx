@@ -5,7 +5,7 @@ import Hero from './Home/Hero'
 import NewsLetter from './Home/NewsLetter'
 import TopCollectibles from './Home/TopCollectibles'
 
-function Home({ data }: any) {
+function Home() {
   return (
     <div>
       <Head>
@@ -14,7 +14,7 @@ function Home({ data }: any) {
       </Head>
       <Hero />
       <NewsLetter />
-      <Carousel data={data} />
+      <Carousel />
       <TopCollectibles />
     </div>
   )
