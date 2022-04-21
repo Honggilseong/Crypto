@@ -33,7 +33,9 @@ function MobileMenus({ mobileMenuIsOpen }: Props) {
         </li>
         <hr color="bg-gray-500" className="w-full" />
         {isAuthenticated ? (
-          <p className="cursor-pointer">Sign Out</p>
+          <p className="cursor-pointer" onClick={() => logout()}>
+            Sign Out
+          </p>
         ) : (
           <>
             <li>
