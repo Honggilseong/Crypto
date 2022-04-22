@@ -2,14 +2,14 @@ import React, { useState } from 'react'
 import { FiMenu } from 'react-icons/fi'
 import { CgSearch } from 'react-icons/cg'
 import { IoMdClose } from 'react-icons/io'
+import { useMoralis } from 'react-moralis'
+import { BsFillPersonFill } from 'react-icons/bs'
 import SearchBar from './Header/SearchBar'
 import MobileSearchBar from './Header/MobileSearchBar'
 import Logo from '../public/images/cryptoLogo.png'
 import Image from 'next/image'
 import Button from './common/Button'
-import { useMoralis } from 'react-moralis'
 import Link from 'next/link'
-import { BsFillPersonFill } from 'react-icons/bs'
 
 interface Props {
   mobileMenuIsOpen: boolean
@@ -18,6 +18,7 @@ interface Props {
 
 function Header({ mobileMenuIsOpen, mobileMenuIsOpenSet }: Props) {
   const [searchIsOpen, searchIsOpenSet] = useState<boolean>(false)
+  const [isProfileMenuOpen, isProfileMenuOpenSet] = useState<boolean>(false)
   const { authenticate, isAuthenticated, logout, user } = useMoralis()
   const toggleMenu = () => {
     mobileMenuIsOpenSet(!mobileMenuIsOpen)
@@ -63,13 +64,24 @@ function Header({ mobileMenuIsOpen, mobileMenuIsOpenSet }: Props) {
       )}
       {isAuthenticated ? (
         <div
-          className=" hidden cursor-pointer items-center md:flex"
-          onClick={() => logout()}
+          className="relative hidden cursor-pointer items-center md:flex"
+          onClick={() => isProfileMenuOpenSet(!isProfileMenuOpen)}
         >
           <BsFillPersonFill className="mr-2" size={25} />
           <p className="w-28 overflow-hidden text-ellipsis whitespace-nowrap">
             {user.get('username')}
           </p>
+          {isProfileMenuOpen && (
+            <div className="absolute -bottom-32 left-0 w-36 rounded-lg bg-white p-5 text-black">
+              <Link href="/myProfile">
+                <p className="cursor-pointer">My profile</p>
+              </Link>
+              <hr className="mt-3 mb-3" />
+              <p onClick={() => logout()} className="cursor-pointer">
+                Sign out
+              </p>
+            </div>
+          )}
         </div>
       ) : (
         <>

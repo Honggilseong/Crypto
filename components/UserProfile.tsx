@@ -1,15 +1,26 @@
-import Head from 'next/head'
-import Image from 'next/image'
 import React, { useEffect, useState } from 'react'
-import NFTCard from './common/NFTCard'
-import Tabs from './common/Tabs'
 import { BsFillPatchCheckFill, BsInstagram } from 'react-icons/bs'
 import { GrTwitter } from 'react-icons/gr'
 import { NFTs } from './Home/NFT'
-import { useMoralisQuery } from 'react-moralis'
 import { useRouter } from 'next/router'
-import { collection, getDoc, getDocs, query, where } from 'firebase/firestore'
+import { collection, getDocs, query, where } from 'firebase/firestore'
 import { db } from '../firebase'
+import Head from 'next/head'
+import Image from 'next/image'
+import NFTCard from './common/NFTCard'
+import Tabs from './common/Tabs'
+
+interface Item {
+  background: string
+  created: string
+  description: string
+  imageUrl: string
+  likes: string
+  minted: string
+  name: string
+  slugName: string
+  views: string
+}
 
 const items = [
   {
@@ -64,9 +75,8 @@ function UserProfile() {
   const router = useRouter()
   const { profile } = router.query
   const [data, dataSet] = useState<any>()
-  console.log(profile)
+
   useEffect(() => {
-    console.log(data)
     if (data) return
     const getProfile = async () => {
       const q = query(
@@ -167,3 +177,27 @@ function UserProfile() {
 }
 
 export default UserProfile
+
+// export const getStaticPaths = async () => {
+//   const q = query(collection(db, 'profile'))
+//   const data = await getDocs(q)
+//   const paths = data.docs.map((doc) => ({
+//     user: doc.data().slugName,
+//   }))
+//   return { paths, fallback: 'blocking' }
+// }
+
+// export const getStaticProps: GetStaticProps = async ({ params }) => {
+//   const q = query(
+//     collection(db, 'profile'),
+//     where('slugName', '==', params?.user)
+//   )
+//   const data = await getDocs(q)
+//   if (!data) return { notFound: true }
+//   return {
+//     props: {
+//       data,
+//     },
+//     revalidate: 120,
+//   }
+// }
