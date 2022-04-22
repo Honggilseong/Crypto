@@ -33,7 +33,7 @@ function myProfile() {
   return (
     <section className="w-full bg-white text-black md:h-[100vh]">
       <div className="m-auto flex max-w-7xl flex-col pt-36 md:flex-row">
-        <span className="m-auto p-5">
+        <span className="flex self-center p-5 md:self-start">
           <Image
             src="/images/avatar/profile.jpg"
             height="400px"
